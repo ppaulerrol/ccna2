@@ -1,0 +1,135 @@
+conf t
+hostname Corebaba-62
+enable secret pass
+service password-encryption
+no logging console
+no ip domain-lookup
+line console 0
+password pass
+login
+exec-timeout 0 0
+line vty 0 14
+int vlan 1
+no shut
+ip add 10.12.1.4 255.255.255.0
+end
+
+
+!Iplementation of Network Design Template:
+conf t
+vlan V
+name __
+int vlan V
+no shutdown
+ip address
+ip dhcp excluded-add __ __
+ip dhcp pool ___
+network ___ ___
+default-router ___
+domain-name __
+dns-server 8.8.8.8
+option 150 ip 10.m.100.8
+end
+
+!for netbn.army.mil.ph
+conf t
+vlan 12
+name netbn.army.mil.ph
+int vlan 12
+no shutdown
+ip address 10.0.16.1 255.255.240.0
+ip dhcp excluded-add 10.0.16.1 10.0.16.100
+ip dhcp pool netbn.army.mil.ph
+network 10.0.16.0 255.255.240.0
+default-router 10.0.16.1
+domain-name netbn.army.mil.ph
+dns-server 8.8.8.8
+option 150 ip 10.62.100.8
+Int fa 0/5 !Corebaba port
+switchport access vlan 12
+end
+sh vlan brief
+sh ip dhcp binding
+
+
+  NETBn 2300
+CEBn 850
+
+10.0.0.0
+
+2300			850
+12b			10b
+32-12=20		32-10=22
+3rd,16i			3rd,4i
+
+subnet:			
+10.0.16.0/20		10.0.4.0/22
+
+1st usable:
+10.0.16.1/20		10.0.4.1/22
+
+last usable:
+10.0.31.255/20		10.0.7.255/22
+
+not yours:
+10.0.32.0/20		10.0.8.0/22
+
+Ex3:
+4ID = 100 Devices
+10.0.0.0/8 -> 110 smart helmets
+
+110
+7b
+32-7=25
+4th,128i
+
+10.0.0.128/25
+
+1st:
+10.0.0.129
+
+bc:
+10.0.0.255
+
+notUrs
+10.0.1.0/128
+
+  !for ceb.army.mil.ph
+conf t
+vlan 10
+name ceb.army.mil.ph
+int vlan 10
+no shutdown
+ip address 10.0.4.1 255.255.252.0
+ip dhcp excluded-add 10.0.4.1 10.0.4.100
+ip dhcp pool ceb.army.mil.ph
+network 10.0.4.0 255.255.252.0
+default-router 10.0.4.1
+domain-name ceb.army.mil.ph
+dns-server 8.8.8.8
+option 150 ip 10.62.100.8
+Int fa 0/7 !Corebaba port
+switchport access vlan 10
+end
+sh vlan brief
+sh ip dhcp binding
+
+  !for 4id.army.mil.ph
+conf t
+vlan 7
+name 4id.army.mil.ph
+int vlan 7
+no shutdown
+ip address 10.0.0.129 255.255.255.128
+ip dhcp excluded-add 10.0.0.129 10.0.0.139
+ip dhcp pool 4id.army.mil.ph
+network 10.0.0.128 255.255.255.128
+default-router 10.0.0.129
+domain-name 4id.army.mil.ph
+dns-server 8.8.8.8
+option 150 ip 10.62.100.8
+Int fa 0/9 !Corebaba port
+switchport access vlan 7
+end
+sh vlan brief
+sh ip dhcp binding
