@@ -41,3 +41,141 @@ ipv6 address cafe:cafe:cafe:cafe::eeee/64 !IP for switch
 end
 
 
+!Taks 2: how to get real world ipv6 exp: using CAI
+2001:fd80:2f10:1030::/64 = NETB IPv6 Subnet:
+divide/subnet the ipv6 allocation ng DICT: to 32 army offices:
+
+Convert: 32 = 2r5
+Addtoorig/: /64+/5= /69
+Ipasok mo:
+ 8  4  2  1    8  4  2  1      8  4  2  1      8  4  2  1 
+
+
+
+
+
+
+
+
+
+
+IPV6 DHCP SERVER FOR DATACENTER:
+conf t
+int vlan 110
+ipv6 enable
+ipv6 add fafa:fafa:fafa:fafa:0040::1/74
+ipv6 dhcp server 1024OFFICE
+ipv6 nd managed-config-flag
+ipv6 nd other-config-flag
+no shut
+ipv6 dhcp pool 1024OFFICE
+address prefix fafa:fafa:fafa:fafa:0040::/74
+int fa0/5
+  switchport access vlan 110
+int fa0/7
+  switchport access vlan 110
+end
+
+
+
+!Taks 3: how to get real world ipv6 exp: using CAI
+fabe:bebe:fabe:bebe::/64 = NETB IPv6 Subnet:
+divide/subnet the ipv6 allocation ng DICT: to 32 army offices:
+
+Convert: 8 = 2r3
+Addtoorig/: /64+/5= /69
+Ipasok mo:
+ 8  4  2  1    8  4  2  1      8  4  2  1      8  4  2  1 
+ 0  0  0  0    2  0  0  0      4  0  0  0      8  0  0  0      a  0  0  0      c  0  0  0  
+
+
+
+
+conf t
+int vlan 108
+ipv6 enable
+ipv6 add fabe:bebe:fabe:bebe::1/74
+ipv6 dhcp server 8OFFICE
+ipv6 nd managed-config-flag
+ipv6 nd other-config-flag
+no shut
+ipv6 dhcp pool 8OFFICE
+address prefix fabe:bebe:fabe:bebe::/74
+int fa0/5
+  switchport access vlan 108
+int fa0/7
+  switchport access vlan 108
+end
+
+clear ipv6 dhcp bind *
+
+
+for ultimate IPV4/IPV6 Senior SME for Army Infra:
+Router,switch,droines,camera,etc,smartdevices:
+ipv6: baba:baba:baba::/48
+ipv4: 172.16.0.0/16
+Convert: 512 = 2r9
+Addtoorig/: /64+/9= 
+Ipasok mo:
+ 8  4  2  1    8  4  2  1      8  4  2  1      8  4  2  1 
+vlan512
+0000  0080  0100  0180  0200  0280  0300  0380
+/48+/9/57
+172.16.0.0/16
+C:  /16+/9=/25
+A:  /25:
+I:  128i,4th  172.16.0.128/25 -> noturs: 172.16.1.0
+              172.16.0.129-172.16.0.255
+
+conf t
+vlan 5
+name 512OFFICE
+int vlan 5
+no shutdown
+ip address 172.16.0.129 255.255.255.128
+ip dhcp excluded-add 172.16.0.129 172.16.0.139
+ip dhcp pool 512OFFICE
+network 172.16.0.129 255.255.255.128
+default-router 172.16.0.129
+domain-name NETB.ARMY.MIL.PH
+dns-server 8.8.8.8
+int fa0/5
+  shut
+  no shut
+  switchport access vlan 5
+int fa0/7
+  shut
+  no shut
+  switchport access vlan 5
+end
+
+conf t
+int vlan 5
+ipv6 enable
+ipv6 add baba:baba:baba:baba:0380::1/57
+ipv6 dhcp server 512OFFICE
+ipv6 nd managed-config-flag
+ipv6 nd other-config-flag
+no shut
+ipv6 dhcp pool 512OFFICE
+address prefix baba:baba:baba:baba:0380::/57
+int fa0/5
+  switchport access vlan 5
+int fa0/7
+  switchport access vlan 5
+end
+
+sh ipv6 dhcp binding
+
+
+sh flash: | include 3560
+sh flash: | include .bin 
+
+
+
+!Task 4 Linux for network eng/admins:
+
+!Open VMware:
+
+rm -rf /etc/udev/rules.d/70-persistent.net
+reboot
