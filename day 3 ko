@@ -3,3 +3,20 @@
 2.  0000:0000:0000:0000:0000:0000:0000:00000
   ::
 3.  
+
+
+
+conf t
+hostname COREbaba-m !m = Monitor number
+enable secret pass
+service password-encryption
+no logging console 
+no ip domain-lookup 
+line console 0
+  password pass
+  login
+  exec-timeout 0 0
+line vty 0 14
+  password pass
+  login
+  exec-timeout 0 0
