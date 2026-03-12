@@ -406,3 +406,80 @@ CMD:
 
 powershell
 add-windowsfeature -name "telnet-client"
+
+
+public key infrastucture:
+
+config t
+NO ip access-list standard NOPORN
+ip access-list standard NOPORN
+DENY 66.254.0.0 0.0.255.255
+deny 161.49.0.0 0.0.255.255
+DENY 104.21.0.0 0.0.255.255
+DENY 68.235.0.0 0.0.255.255
+DENY 104.17.0.0 0.0.255.255
+DENY 88.208.0.0 0.0.255.255
+DENY 208.77.0.0 0.0.255.255
+DENY 172.67.0.0 0.0.255.255
+Permit Any
+Int Gi 1
+ ip access-group NOPORN in
+end
+
+config t
+NO ip access-list standard NOTORS
+ip access-list standard NOTORS
+DENY   162.159.0.0   0.0.255.255
+DENY   172.67.0.0   0.0.255.255
+DENY   76.223.0.0   0.0.255.255
+DENY   104.21.0.0   0.0.255.255
+DENY   104.0.0.0    0.255.255.255
+Permit Any
+Int Gi 1
+ ip access-group NOTORS in
+end
+
+
+config t
+no access-list 8
+access-list 8 permit any
+Int Gi 3
+ ip nat Inside
+Int gi 1
+ ip nat Outside
+IP Nat inside source static tcp 192.168.103.21 80 208.8.8.169 80
+IP Nat inside source static tcp 192.168.103.21 443 208.8.8.169 443
+IP Nat inside source static tcp 192.168.103.22 80 208.8.8.169 8080
+IP Nat inside source static tcp 192.168.103.22 443 208.8.8.169 8443
+IP nat inside source list 8 int gi 1 Overload
+end
+show ip nat translation
+
+
+conf t
+monitor session 1 source interface fa0/5,fa0/7 both
+monitor session 1 destination interface fa0/1
+end
+
+rtp || sip
+
+
+
+
+
+Congressman: pahingi nang 25% worth 250 mil para sa ghost project sa bulacan at Mimarpa
+"padala mo sa pink na maleta"
+
+district Engineer: " Mag resortsworlds muna ako para malinis and pera. padala ko sa Ex Marines sa BGC"
+
+
+COREbaba-62#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+COREbaba-62(config)#no monitor session 1
+COREbaba-62(config)#end
+
+
+sudo su
+ifconfig eth0 11.11.11.100 netmask 255.255.255.224 up
+route add default gw 11.11.11.113
+ping 11.11.11.113
