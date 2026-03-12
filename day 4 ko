@@ -263,10 +263,10 @@ conf t
   destination-pattern 11..
   session target ipv4:10.11.11.1
   codec g711ULAW
- !dial-peer voice 12 Voip
-  !destination-pattern 12..
-  !session target ipv4:10.12.12.1
-  !codec g711ULAW
+ dial-peer voice 12 Voip
+  destination-pattern 12..
+  session target ipv4:10.12.12.1
+  codec g711ULAW
  dial-peer voice 21 Voip
   destination-pattern 21..
   session target ipv4:10.21.21.1
@@ -303,10 +303,10 @@ conf t
   destination-pattern 61..
   session target ipv4:10.61.61.1
   codec g711ULAW
- dial-peer voice 62 Voip
-  destination-pattern 62..
-  session target ipv4:10.62.62.1
-  codec g711ULAW
+ !dial-peer voice 62 Voip
+  !destination-pattern 62..
+  !session target ipv4:10.62.62.1
+  !codec g711ULAW
  dial-peer voice 71 Voip
   destination-pattern 71..
   session target ipv4:10.71.71.1
@@ -352,5 +352,57 @@ router-id 10.62.62.4
 network 10.62.0.0  0.0.255.255 area 0
 int gi 0/1
  ip ospf network point-to-point
-
 end
+
+
+
+
+!STATIC ROUTING TO CALL ALL CLASSMATES:
+conf t
+ip route 10.11.0.0 255.255.0.0 200.0.0.11
+ip route 10.12.0.0 255.255.0.0 200.0.0.12
+ip route 10.21.0.0 255.255.0.0 200.0.0.21
+ip route 10.22.0.0 255.255.0.0 200.0.0.22
+ip route 10.31.0.0 255.255.0.0 200.0.0.31
+ip route 10.32.0.0 255.255.0.0 200.0.0.32
+ip route 10.41.0.0 255.255.0.0 200.0.0.41
+ip route 10.42.0.0 255.255.0.0 200.0.0.42
+ip route 10.51.0.0 255.255.0.0 200.0.0.51
+ip route 10.52.0.0 255.255.0.0 200.0.0.52
+ip route 10.61.0.0 255.255.0.0 200.0.0.61
+!ip route 10.62.0.0 255.255.0.0 200.0.0.62
+end
+
+!HOW TO USE 7 OSI LAYERS TO HACK SOMEONE
+PICK UR VICTIM
+
+tcp.flags.syn == 1 && tcp.flags.ack == 0
+
+
+			hacker					destination
+socket:
+SIP:		10.m.1.10
+DIP:		10.k.1.10	--> SYN
+SPort:
+DPort:
+
+
+CMD:
+	ping 10.k.1.10
+	nmap -v 10.k.1.10
+	
+	net use x: /delete
+	
+	!attack port 445 with admin share access:
+	net use \\10.61.1.10\ipc$
+	
+	net use x: \\10.k.1.10\c$
+
+	x:
+	mkdir PASOKSIPAULSAYOU
+
+!HOW TO CHECK IF YOUR GETTING HACKED:
+	netstat -s -p tcp
+
+powershell
+add-windowsfeature -name "telnet-client"
